@@ -32,6 +32,7 @@ public:
 	void close();
 private:
 
+	// Тестовые штуки, подлежат удалению
 	std::vector<Cube*> cubes;
 	float angle;
 
@@ -41,7 +42,16 @@ private:
 	GLuint _height;
 
 	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 	void frameBufferResize_callback(GLFWwindow* window, int width, int height);
+
+
+	// TODO: Вынести эти переменные в другие классы
+	float lastX;
+	float lastY;
+
+	float yaw;
+	float pitch;
 
 };
 }

@@ -14,25 +14,40 @@ bbe::Window::Window(GLuint width, GLuint height, std::string title)
 	_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 	glfwMakeContextCurrent(_window);
 	glfwSwapInterval(1);
+	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	
 
 	glfwSetWindowUserPointer(_window, this);
 	
-	auto keyCallback = [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+	auto keyCallback = [](GLFWwindow* window, int key, int scancode, int action, int mods) 
+	{
 		auto tWindow = (Window*)glfwGetWindowUserPointer(window);
 		tWindow->key_callback(window, key, scancode, action, mods);
 	};
 
 	glfwSetKeyCallback(_window, keyCallback);
 	
-	auto frameBufferResizeCallback = [](GLFWwindow* window, int width, int height) {
+	auto frameBufferResizeCallback = [](GLFWwindow* window, int width, int height) 
+	{
 		auto tWindow = (Window*)glfwGetWindowUserPointer(window);
 		tWindow->frameBufferResize_callback(window, width, height);
 	};
-
 	glfwSetFramebufferSizeCallback(_window, frameBufferResizeCallback);
+
+	auto mouseCallback = [](GLFWwindow* window, double xpos, double ypos)
+	{
+			auto tWindow = (Window*)glfwGetWindowUserPointer(window);
+			tWindow->mouse_callback(window, xpos, ypos);
+	};
+
+	glfwSetCursorPosCallback(_window, mouseCallback);
+
 	angle = 0;
 	
+	yaw = 0;
+	pitch = 0;
+	lastX = 0;
+	lastY = 0;
 }
 
 bbe::Window::~Window()
@@ -76,7 +91,7 @@ bool bbe::Window::isRunning()
 void bbe::Window::handleUpdate(float deltaTime)
 {
 	glfwPollEvents();
-	float cameraSpeed = 0.5f;
+	float cameraSpeed = 2.0f;
 	if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		camera->_position += cameraSpeed * camera->_front * deltaTime;
@@ -135,6 +150,36 @@ void bbe::Window::key_callback(GLFWwindow* window, int key, int scancode, int ac
 	{
 		close();
 	}
+}
+
+void bbe::Window::mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	const float sensitivity = 0.5f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+
+	yaw += yoffset / _height;
+	pitch -= xoffset / _height;
+
+
+	if (pitch > 89.0f)
+	{
+		pitch = 89.0f;
+	}
+	if (pitch < -89.0f)
+	{
+		pitch = -89.0f;
+	}
+
+	camera->_rotation = glm::mat4(1.0f);
+	camera->rotate(yaw, pitch, 0);
 }
 
 void bbe::Window::frameBufferResize_callback(GLFWwindow* window, int width, int height)
