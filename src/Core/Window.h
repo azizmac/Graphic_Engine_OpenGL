@@ -7,6 +7,7 @@
 
 #include "Cube.h"
 #include "Camera.h"
+#include <vector>
 
 namespace bbe 
 {
@@ -31,7 +32,9 @@ public:
 	void close();
 private:
 
-	Cube* cube;
+	std::vector<Cube*> cubes;
+	float angle;
+
 	Camera* camera;
 	GLFWwindow* _window;
 	GLuint _width;

@@ -31,20 +31,29 @@ bbe::Window::Window(GLuint width, GLuint height, std::string title)
 	};
 
 	glfwSetFramebufferSizeCallback(_window, frameBufferResizeCallback);
-
+	angle = 0;
 	
 }
 
 bbe::Window::~Window()
 {
-	delete cube;
 	glfwDestroyWindow(_window);
 }
 
 void bbe::Window::initialize()
 {
 	glViewport(0, 0, _width, _height);
-	cube = new Cube();
+
+	for (int i = 0; i < 5; i++)
+	{
+		cubes.emplace_back(new Cube);
+
+		float randX =  -1 + std::rand() % 2;
+		float randY = -1 + std::rand() % 2;
+
+		
+		cubes[i]->setPosition(glm::vec3(randX + i * 2.0f, randY + i * 2.0f, -6.0f * i));
+	}
 }
 
 void bbe::Window::setHeight(GLuint height)
@@ -88,6 +97,11 @@ void bbe::Window::handleUpdate(float deltaTime)
 
 void bbe::Window::update(float deltaTime)
 {
+	angle += 1.0f * deltaTime * 100;
+	for (int i = 0; i < 5; i++)
+	{
+		cubes[i]->setRotation(angle);
+	}
 }
 
 void bbe::Window::draw()
@@ -95,12 +109,15 @@ void bbe::Window::draw()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	glm::mat4 model = glm::mat4(1.0f);
-	cube->getShader()->setMat4("projection", camera->getProjection(_width, _height));
-	cube->getShader()->setMat4("view", camera->getView());
-	cube->getShader()->setMat4("model", model);
+	for (int i = 0; i < 5; i++)
+	{
+		cubes[i]->setRotation(angle);
 
-	cube->draw();
+		cubes[i]->getShader()->setMat4("projection", camera->getProjection(_width, _height));
+		cubes[i]->getShader()->setMat4("view", camera->getView());
+
+		cubes[i]->draw();
+	}
 
 	glfwSwapBuffers(_window);
 

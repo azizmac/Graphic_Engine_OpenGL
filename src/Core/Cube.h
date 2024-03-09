@@ -14,6 +14,16 @@ public:
 
     Shader* getShader();
 
+    void setPosition(const glm::vec3& position);
+    void setRotation(const float& rotation);
+    void setScale(const glm::vec3& scale);
+
+    const glm::vec3& getPosition() const;
+    const float& getRotation() const;
+    const glm::vec3& getScale() const;
+
+    const glm::mat4& getTransform() const;
+
 	void draw();
 private:
 	float vertices[108] = 
@@ -61,9 +71,14 @@ private:
     -0.5f,  0.5f, -0.5f
 	};
 	
-	unsigned int VAO; // Vertex Array Object id
-	unsigned int VBO; // Vertex Buffer Object id
-	Shader* shader;
+    glm::mat4 _transform;
+    glm::vec3 _position;
+    glm::vec3 _scale;
+    float _rotation;
+
+	unsigned int _VAO; // Vertex Array Object id
+	unsigned int _VBO; // Vertex Buffer Object id
+	Shader* _shader;
 };
 
 }
