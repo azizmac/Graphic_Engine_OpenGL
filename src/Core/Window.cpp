@@ -91,7 +91,11 @@ bool bbe::Window::isRunning()
 void bbe::Window::handleUpdate(float deltaTime)
 {
 	glfwPollEvents();
-	float cameraSpeed = 2.0f;
+	float cameraSpeed = 5.0f;
+	if (glfwGetKey(_window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+	{
+		cameraSpeed *= 10;
+	}
 	if (glfwGetKey(_window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		camera->_position += cameraSpeed * camera->_front * deltaTime;
