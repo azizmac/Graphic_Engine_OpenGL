@@ -1,15 +1,4 @@
 #include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
-#include "Tranformable.h"
 
 bbe::Tranformable::Tranformable()
 {

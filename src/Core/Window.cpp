@@ -68,7 +68,10 @@ void bbe::Window::initialize()
 
 		
 		cubes[i]->setPosition(glm::vec3(randX + i * 2.0f, randY + i * 2.0f, -6.0f * i));
+
 	}
+
+
 }
 
 void bbe::Window::setHeight(GLuint height)

@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Cube.h"
+#include "Triangle.h"
 #include "Camera.h"
 #include <vector>
 
@@ -34,6 +35,7 @@ private:
 
 	// Тестовые штуки, подлежат удалению
 	std::vector<Cube*> cubes;
+	std::vector<Triangle> triangles;
 	float angle;
 
 	Camera* camera;
