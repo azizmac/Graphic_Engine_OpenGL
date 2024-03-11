@@ -71,6 +71,8 @@ void bbe::Window::initialize()
 
 	}
 
+	// Каркасное представление моделей
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 }
 
@@ -133,7 +135,6 @@ void bbe::Window::draw()
 	
 	for (int i = 0; i < 5; i++)
 	{
-		cubes[i]->setRotation(angle);
 
 		cubes[i]->getShader()->setMat4("projection", camera->getProjection(_width, _height));
 		cubes[i]->getShader()->setMat4("view", camera->getView());

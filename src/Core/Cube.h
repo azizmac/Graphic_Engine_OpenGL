@@ -3,6 +3,7 @@
 
 #include "Shader.h"
 #include "Graphics/Tranformable.h"
+#include "Graphics/VAO.h"
 
 namespace bbe
 {
@@ -62,8 +63,8 @@ private:
     -0.5f,  0.5f, -0.5f
 	};
 
-	unsigned int _VAO; // Vertex Array Object id
-	unsigned int _VBO; // Vertex Buffer Object id
+	VAO _VAO; // Vertex Array Object id
+	VBO _VBO; // Vertex Buffer Object id
 	Shader* _shader;
 };
 
