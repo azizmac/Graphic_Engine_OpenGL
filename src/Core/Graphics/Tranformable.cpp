@@ -6,7 +6,7 @@ bbe::Tranformable::Tranformable()
 	_position = glm::vec3(1.0f);
 	_rotation = 0;
 	_scale = glm::vec3(1.0f);
-	_origin = glm::vec3(1.0f, 0.3f, 0.5f);
+	_origin = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
 bbe::Tranformable::~Tranformable()
@@ -61,8 +61,9 @@ void bbe::Tranformable::rotate(float angleOffset)
 const glm::mat4& bbe::Tranformable::getTransformMatrix() 
 {
 	_tranformMatrix = glm::mat4(1.0f);
-	_tranformMatrix = glm::rotate(_tranformMatrix, glm::radians(_rotation), _origin);
 	_tranformMatrix = glm::translate(_tranformMatrix, _position);
+	_tranformMatrix = glm::rotate(_tranformMatrix, glm::radians(_rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+	_tranformMatrix = glm::translate(_tranformMatrix, _origin);
 	_tranformMatrix = glm::scale(_tranformMatrix, _scale);
 	
 	return _tranformMatrix;

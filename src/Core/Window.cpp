@@ -124,7 +124,7 @@ void bbe::Window::update(float deltaTime)
 	angle += 1.0f * deltaTime * 100;
 	for (int i = 0; i < 5; i++)
 	{
-		//cubes[i]->setRotation(angle);
+		cubes[i]->setRotation(angle);
 	}
 }
 
