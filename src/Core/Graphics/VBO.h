@@ -8,8 +8,7 @@ namespace bbe
 class VBO 
 {
 public:
-	VBO(std::vector<float> vertices);
-	VBO(float vertices[108]);
+	VBO(std::vector<float>& vertices);
 
 	void bind();
 	void unbind();
