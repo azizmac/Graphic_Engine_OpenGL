@@ -43,6 +43,11 @@ bbe::Cube::Cube()
 bbe::Cube::~Cube()
 {
     delete _shader;
+    _VBO->clear();
+    _EBO->clear();
+    delete _VBO;
+    delete _EBO;
+    _VAO.clear();
 }
 
 bbe::Shader* bbe::Cube::getShader()
