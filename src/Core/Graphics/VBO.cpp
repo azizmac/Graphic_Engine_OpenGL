@@ -1,12 +1,12 @@
 #include "VBO.h"
 #include <iostream>
 
-bbe::VBO::VBO(std::vector<float>& vertices)
+bbe::VBO::VBO(std::vector<Vertex>& vertices)
 {
 	_vertices = vertices;
 	glGenBuffers(1, &_ID);
 	glBindBuffer(GL_ARRAY_BUFFER, _ID);
-	glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(float), (void*)_vertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), (void*)_vertices.data(), GL_STATIC_DRAW);
 }
 
 void bbe::VBO::bind()
@@ -24,7 +24,7 @@ void bbe::VBO::clear()
 	glDeleteBuffers(1, &_ID);
 }
 
-std::vector<float> bbe::VBO::getVertices()
+const std::vector<bbe::Vertex>& bbe::VBO::getVertices()
 {
 	return _vertices;
 }

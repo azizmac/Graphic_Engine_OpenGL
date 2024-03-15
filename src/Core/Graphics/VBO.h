@@ -1,24 +1,31 @@
 #include <glad/glad.h>
 #include <vector>
+#include <glm/ext.hpp>
 #ifndef _VERTEX_BUFFER_OBJECT_H_
 #define _VERTEX_BUFFER_OBJECT_H_
 
 namespace bbe
 {
+
+struct Vertex
+{
+	glm::vec3 _position;
+};
+
 class VBO 
 {
 public:
-	VBO(std::vector<float>& vertices);
+	VBO(std::vector<Vertex>& vertices);
 
 	void bind();
 	void unbind();
 
 	void clear();
 
-	std::vector<float> getVertices();
+	const std::vector<Vertex>& getVertices();
 private:
 	GLuint _ID;
-	std::vector<float> _vertices;
+	std::vector<Vertex> _vertices;
 };
 }
 

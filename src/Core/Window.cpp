@@ -1,10 +1,15 @@
 #include "Window.h"
 #include <iostream>
 #include <glm/ext.hpp>
+#include "Graphics/CubeMesh.h"
 
 bbe::Window::Window(GLuint width, GLuint height, std::string title)
 {
+
+
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), 45.0f);
+
+	_renderSystem = new RenderSystem(camera);
 
 	camera->_front = glm::vec3(0.0f, 0.0f, -1.0f);
 	camera->_up = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -59,18 +64,10 @@ void bbe::Window::initialize()
 {
 	glViewport(0, 0, _width, _height);
 
-	for (int i = 0; i < 5; i++)
-	{
-		cubes.emplace_back(new Cube);
 
-		float randX =  -1 + std::rand() % 2;
-		float randY = -1 + std::rand() % 2;
-
-		
-		cubes[i]->setPosition(glm::vec3(randX + i * 2.0f, randY + i * 2.0f, -6.0f * i));
-
-	}
-
+	object = new SceneObject();
+	object->addComponent(new bbe::MeshComponent(bbe::CubeMesh::vertices, bbe::CubeMesh::indices, object));
+	sceneObjects.push_back(object);
 	// Каркасное представление моделей
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -122,9 +119,9 @@ void bbe::Window::handleUpdate(float deltaTime)
 void bbe::Window::update(float deltaTime)
 {
 	angle += 1.0f * deltaTime * 100;
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < sceneObjects.size(); i++)
 	{
-		cubes[i]->setRotation(angle);
+		sceneObjects[i]->setRotation(angle);
 	}
 }
 
@@ -133,14 +130,7 @@ void bbe::Window::draw()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	for (int i = 0; i < 5; i++)
-	{
-
-		cubes[i]->getShader()->setMat4("projection", camera->getProjection(_width, _height));
-		cubes[i]->getShader()->setMat4("view", camera->getView());
-
-		cubes[i]->draw();
-	}
+	_renderSystem->update(sceneObjects);
 
 	glfwSwapBuffers(_window);
 

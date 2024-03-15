@@ -25,7 +25,9 @@ add_subdirectory(thirdparty/glfw)
 add_subdirectory(thirdparty/glad)
 add_subdirectory(thirdparty/glm)
 
-add_executable(${PROJECT_NAME} "src/main.cpp" "src/Core/Window.h" "src/Core/Window.cpp" "src/Core/Application.h" "src/Core/Application.cpp" "src/Core/Cube.h" "src/Core/Cube.cpp" "src/Core/Shader.cpp" "src/Core/Shader.h" "src/Core/Camera.h" "src/Core/Camera.cpp" "src/Core/Graphics/Tranformable.h" "src/Core/Graphics/Tranformable.cpp" "src/Core/Triangle.h" "src/Core/Triangle.cpp" "src/Core/Graphics/VAO.h" "src/Core/Graphics/VAO.cpp" "src/Core/Graphics/VBO.h" "src/Core/Graphics/VBO.cpp" "src/Core/Graphics/EBO.h" "src/Core/Graphics/EBO.cpp")
+file(GLOB SOURCES CONFIGURE_DEPENDS "src/*.h" "src/*.cpp" "src/Core/*.cpp" "src/Core/*.h" "src/Core/Graphics/*.cpp" "src/Core/Graphics/*.h" "src/Core/Systems/*.cpp" "src/Core/Systems/*.h")
+
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 find_package(OpenGL REQUIRED)
 

@@ -5,10 +5,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Cube.h"
-#include "Triangle.h"
 #include "Camera.h"
 #include <vector>
+#include "SceneObject.h"
+#include "Systems/RenderSystem.h"
 
 namespace bbe 
 {
@@ -34,8 +34,6 @@ public:
 private:
 
 	// Тестовые штуки, подлежат удалению
-	std::vector<Cube*> cubes;
-	std::vector<Triangle> triangles;
 	float angle;
 
 	Camera* camera;
@@ -49,11 +47,17 @@ private:
 
 
 	// TODO: Вынести эти переменные в другие классы
-	float lastX;
-	float lastY;
+	float lastX = 0;
+	float lastY = 0;
 
-	float yaw;
-	float pitch;
+	float yaw = 0;
+	float pitch = 0;
+
+	SceneObject* object;
+
+	RenderSystem* _renderSystem;
+	std::vector<SceneObject*> sceneObjects;
+
 
 };
 }
