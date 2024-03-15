@@ -11,9 +11,13 @@ class RenderSystem
 {
 public:
 	RenderSystem(Camera* camera);
+	~RenderSystem();
+
 
 	void update(std::vector<SceneObject*> objects);
 private:
+	Texture* _texture;
+	Shader* _shader;
 	Camera* _camera;
 };
 

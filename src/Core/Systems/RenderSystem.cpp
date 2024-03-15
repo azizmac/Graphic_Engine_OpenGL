@@ -5,6 +5,15 @@
 bbe::RenderSystem::RenderSystem(Camera* camera)
 {
 	_camera = camera;
+	_shader = new Shader("shaders/vertexShader.vert", "shaders/fragmentShader.frag");
+	_texture = new Texture();
+	_texture->load("images/cat.jpg");
+	_texture->setTextureUniform(_shader, "tex0", 0);
+}
+
+bbe::RenderSystem::~RenderSystem()
+{
+	delete _shader;
 }
 
 void bbe::RenderSystem::update(std::vector<SceneObject*> objects)
@@ -21,5 +30,5 @@ void bbe::RenderSystem::update(std::vector<SceneObject*> objects)
 	}
 	
 
-	mesh->draw(*_camera);
+	mesh->draw(*_shader, *_camera, *_texture);
 }

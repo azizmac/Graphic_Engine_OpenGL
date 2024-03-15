@@ -9,6 +9,7 @@
 #include <vector>
 #include "SceneObject.h"
 #include "Systems/RenderSystem.h"
+#include "Input/Mouse.h"
 
 namespace bbe 
 {

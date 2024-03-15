@@ -9,7 +9,9 @@ namespace bbe
 
 struct Vertex
 {
-	glm::vec3 _position;
+	glm::vec3 position;
+	glm::vec3 color;
+	glm::vec2 uvTexture;
 };
 
 class VBO 
@@ -30,4 +32,3 @@ private:
 }
 
 #endif // !_VERTEX_BUFFER_OBJECT_H_
-

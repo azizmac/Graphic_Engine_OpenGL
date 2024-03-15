@@ -1,15 +1,12 @@
 #include "Window.h"
 #include <iostream>
 #include <glm/ext.hpp>
-#include "Graphics/CubeMesh.h"
+#include "Graphics/Meshes/CubeMesh.h"
 
 bbe::Window::Window(GLuint width, GLuint height, std::string title)
 {
-
-
 	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), 45.0f);
 
-	_renderSystem = new RenderSystem(camera);
 
 	camera->_front = glm::vec3(0.0f, 0.0f, -1.0f);
 	camera->_up = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -21,7 +18,6 @@ bbe::Window::Window(GLuint width, GLuint height, std::string title)
 	glfwSwapInterval(1);
 	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	
-
 	glfwSetWindowUserPointer(_window, this);
 	
 	auto keyCallback = [](GLFWwindow* window, int key, int scancode, int action, int mods) 
@@ -57,19 +53,24 @@ bbe::Window::Window(GLuint width, GLuint height, std::string title)
 
 bbe::Window::~Window()
 {
-	glfwDestroyWindow(_window);
+	glfwDestroyWindow(_window); 
 }
 
 void bbe::Window::initialize()
 {
 	glViewport(0, 0, _width, _height);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
+	_renderSystem = new RenderSystem(camera);
 
 	object = new SceneObject();
 	object->addComponent(new bbe::MeshComponent(bbe::CubeMesh::vertices, bbe::CubeMesh::indices, object));
 	sceneObjects.push_back(object);
+	object->setPosition(glm::vec3(5.0f, 0.0f, 0.0f));
+
 	// Каркасное представление моделей
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 }
 
@@ -114,6 +115,7 @@ void bbe::Window::handleUpdate(float deltaTime)
 	{
 		camera->_position += glm::normalize(glm::cross(camera->_front, camera->_up)) * cameraSpeed * deltaTime;
 	}
+
 }
 
 void bbe::Window::update(float deltaTime)
@@ -152,7 +154,10 @@ void bbe::Window::key_callback(GLFWwindow* window, int key, int scancode, int ac
 
 void bbe::Window::mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	
+
+	bbe::Mouse::x = xpos;
+	bbe::Mouse::y = ypos;
+
 	float xoffset = xpos - lastX;
 	float yoffset = lastY - ypos;
 	lastX = xpos;

@@ -24,8 +24,26 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_subdirectory(thirdparty/glfw)
 add_subdirectory(thirdparty/glad)
 add_subdirectory(thirdparty/glm)
+add_subdirectory(thirdparty/stb_image)
 
-file(GLOB SOURCES CONFIGURE_DEPENDS "src/*.h" "src/*.cpp" "src/Core/*.cpp" "src/Core/*.h" "src/Core/Graphics/*.cpp" "src/Core/Graphics/*.h" "src/Core/Systems/*.cpp" "src/Core/Systems/*.h")
+file(GLOB SOURCES CONFIGURE_DEPENDS 
+"src/*.h" "src/*.cpp" 
+
+"src/Core/*.cpp" 
+"src/Core/*.h" 
+
+"src/Core/Graphics/*.cpp" 
+"src/Core/Graphics/*.h"
+"src/Core/Graphics/Meshes/*.cpp" 
+"src/Core/Graphics/Meshes/*.h"
+
+"src/Core/Systems/*.cpp" 
+"src/Core/Systems/*.h"
+
+"src/Core/Input/*.cpp"
+"src/Core/Input/*.h"
+
+)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -35,8 +53,12 @@ target_link_libraries(${PROJECT_NAME} glad)
 target_link_libraries(${PROJECT_NAME} glfw)
 target_link_libraries(${PROJECT_NAME} OpenGL::GL)
 target_link_libraries(${PROJECT_NAME} glm)
+target_link_libraries(${PROJECT_NAME} stb_image)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${CMAKE_SOURCE_DIR}/shaders $<TARGET_FILE_DIR:${PROJECT_NAME}>/shaders)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       ${CMAKE_SOURCE_DIR}/images $<TARGET_FILE_DIR:${PROJECT_NAME}>/images)
 

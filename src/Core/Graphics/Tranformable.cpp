@@ -12,7 +12,7 @@ bbe::Tranformable::Tranformable()
 bbe::Tranformable::~Tranformable()
 {
 }
-
+ 
 void bbe::Tranformable::setPosition(const glm::vec3& position)
 {
 	_position = position;

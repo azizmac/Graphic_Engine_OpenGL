@@ -7,6 +7,7 @@
 #include "../Camera.h"
 #include "../Component.h"
 #include "Tranformable.h"
+#include "Texture.h"
 
 namespace bbe
 {
@@ -17,14 +18,13 @@ class MeshComponent : public Component
 public:
 	MeshComponent(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, Tranformable* transform);
 
-	void draw(Camera& camera);
+	void draw(Shader& shader, Camera& camera, Texture& texture);
 private:
 	Tranformable* _transform;
+	
 
 	std::vector<Vertex> _vertices;
 	std::vector<GLuint> _indices;
-	
-	Shader* _shader;
 
 	VAO _VAO;
 	VBO* _VBO;

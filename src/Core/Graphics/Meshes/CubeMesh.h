@@ -1,7 +1,7 @@
 #ifndef _CUBE_MESH_H_
 #define _CUBE_MESH_H_
 #include <vector>
-#include "VBO.h"
+#include "../VBO.h"
 
 namespace bbe
 {

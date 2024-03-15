@@ -23,6 +23,7 @@ void bbe::Camera::updateVectors()
 		_direction.x /= len;
 		_direction.z /= len;
 	}
+
 }
 
 void bbe::Camera::rotate(float x, float y, float z) 
